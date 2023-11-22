@@ -20,6 +20,11 @@ class Users extends Component
     #[Rule('required')]
     public $role_id='';
     public $search = '';
+    public $roles='';
+    public function mount(){
+        $this->roles=\App\Models\Roles::all();
+
+    }
     public  function createNewUser(){
         $validated=$this->validate();
         User::create(

@@ -77,7 +77,7 @@
                     @error('password')
                     <span class="text-red-500 text-xs">{{$message}}</span>
                     @enderror
-                    <input
+                   {{-- <input
                         wire:model="role_id"
                         type="text"
                         class="block border border-grey-light w-full p-3 rounded mb-4"
@@ -85,7 +85,17 @@
                         placeholder="role_id" />
                     @error('role_id')
                     <span class="text-red-500 text-xs">{{$message}}</span>
+                    @enderror--}}
+                    <select wire:model="role_id" class="block border border-grey-light w-full p-3 rounded mb-4">
+                        <option value="">انتخاب نقش</option>
+                        @foreach($roles as $role)
+                            <option value="{{ $role['id'] }}">{{ $role['name'] }}</option>
+                        @endforeach
+                    </select>
+                    @error('role_id')
+                    <span class="text-red-500 text-xs">{{$message}}</span>
                     @enderror
+
                     <button
                         wire:click.prevent="createNewUser"
                         type="submit"
