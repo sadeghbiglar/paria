@@ -39,6 +39,9 @@ class Users extends Component
         $this->reset(['name','email','password','role_id']);
         request()->session()->flash('success','user created success');
     }
+    public function delete($userID){
+    User::find($userID)->delete();
+    }
     public function render()
     {
         return view('livewire.users',[
