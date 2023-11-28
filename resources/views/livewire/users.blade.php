@@ -100,7 +100,7 @@
                         wire:click.prevent="createNewUser"
                         type="submit"
                         class="w-full text-center py-3 rounded bg-green-500 text-white hover:bg-green-500 focus:outline-none my-1"
-                    >ایجاد کاربر</button>
+                    >ایجاد یک کاربر</button>
 
                 </form>
                 @if(session('success'))
