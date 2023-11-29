@@ -42,6 +42,25 @@ class Users extends Component
     public function delete($userID){
     User::find($userID)->delete();
     }
+    public $showModal = false;
+    public $showModal1 = false;
+
+    public function openModal()
+    {
+        $this->showModal = true;
+    }
+    public function closeModal()
+    {
+        $this->showModal = false;
+    }
+    public function openModal1()
+    {
+        $this->showModal1 = true;
+    }
+    public function closeModal1()
+    {
+        $this->showModal1 = false;
+    }
     public function render()
     {
         return view('livewire.users',[
