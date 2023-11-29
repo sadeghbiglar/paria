@@ -1,5 +1,5 @@
 <div>
-    <div class="flex flex-col">
+    <div class="flex flex-col vazirmatn">
         <!-- جستجو -->
         <input
             wire:model.live.debounce.500ms="search"
@@ -9,11 +9,11 @@
         >
 
         <!-- جدول -->
-        <div class="overflow-x-auto sm:-mx-6 lg:-mx-8">
+        <div class="overflow-x-auto sm:-mx-6 lg:-mx-8 ">
             <div class="inline-block min-w-full py-2 sm:px-6 lg:px-8">
                 <div class="overflow-hidden">
                     <table
-                        class="min-w-full text-center text-sm font-light bg-gradient-to-r from-purple-500 via-pink-500 to-red-500 text-white"
+                        class="min-w-full text-center text-sm font-light bg-gradient-to-r from-purple-500 via-pink-500 to-red-500 text-white "
                     >
                         <thead class="border-b">
                         <tr>
@@ -56,7 +56,7 @@
         wire:click="openCreateUserModal"
 
         class="w-full text-center py-3 rounded bg-green-500 text-white hover:bg-green-500 focus:outline-none my-1"
-    >ایجاد یک کاربر</button>
+    >ایجاد  کاربر</button>
 
 
 
