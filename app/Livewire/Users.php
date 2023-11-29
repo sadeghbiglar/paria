@@ -21,6 +21,10 @@ class Users extends Component
     public $role_id='';
     public $search = '';
     public $roles='';
+    public $EditingID='';
+    #[Rule('required|min:2|max:50')]
+    public $EditingName='';
+
     public function mount(){
         $this->roles=\App\Models\Roles::all();
 
@@ -42,24 +46,43 @@ class Users extends Component
     public function delete($userID){
     User::find($userID)->delete();
     }
-    public $showModal = false;
-    public $showModal1 = false;
+    public  function edit($userID){
+        $this->EditingID=$userID;
+        $this->EditingName=User::find($userID)->name;
+        $this->openEditUserModal();
+    }
+    public  function cancelEdit(){
+    $this->reset('EditingID','EditingName');
+    $this->closeEditUserModal();
+    }
+    public function update(){
+        $this->validateOnly('EditingName');
+        User::find($this->EditingID)->update(
+            [
+                'name'=>$this->EditingName
+            ]
+        );
+        $this->cancelEdit();
+        $this->closeEditUserModal();
+    }
+    public $showCreateUserModal = false;
+    public $showEditUserModal = false;
 
-    public function openModal()
+    public function openCreateUserModal()
     {
-        $this->showModal = true;
+        $this->showCreateUserModal = true;
     }
-    public function closeModal()
+    public function closeCreateUserModal()
     {
-        $this->showModal = false;
+        $this->showCreateUserModal = false;
     }
-    public function openModal1()
+    public function openEditUserModal()
     {
-        $this->showModal1 = true;
+        $this->showEditUserModal = true;
     }
-    public function closeModal1()
+    public function closeEditUserModal()
     {
-        $this->showModal1 = false;
+        $this->showEditUserModal = false;
     }
     public function render()
     {

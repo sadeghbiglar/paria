@@ -36,7 +36,7 @@
                                 <button wire:click="delete({{$user->id}})">
                                     delete
                                 </button>
-                                <button wire:click="edit({{$user->id}})">
+                                <button wire:click="edit({{$user->id}}) ">
                                     edit
                                 </button>
                             </td>
@@ -53,20 +53,16 @@
 
     <!-- component -->
     <button
-        wire:click="openModal"
+        wire:click="openCreateUserModal"
 
-        class="w-1/2 text-center py-3 rounded bg-green-500 text-white hover:bg-green-500 focus:outline-none my-1"
+        class="w-full text-center py-3 rounded bg-green-500 text-white hover:bg-green-500 focus:outline-none my-1"
     >ایجاد یک کاربر</button>
-    <button
-        wire:click="openModal1"
 
-        class="w-1/2 text-center py-3 rounded bg-green-500 text-white hover:bg-green-500 focus:outline-none my-1"
-    >ثبت کاربر جدید</button>
 
 
     <div>
 
-        <div x-data="{ showModal: @entangle('showModal') }" x-show="showModal" @click.away="showModal = false"
+        <div x-data="{ showCreateUserModal: @entangle('showCreateUserModal') }" x-show="showCreateUserModal" @click.away="showCreateUserModal = false"
              class="fixed inset-0 flex items-center justify-center overflow-y-auto">
             <div class="bg-white p-4 max-w-md mx-auto mt-8 mb-8 rounded shadow-lg">
 
@@ -139,12 +135,12 @@
 
                 </div>
 
-                <button wire:click="closeModal" class="bg-gray-300 hover:bg-gray-400 text-gray-800 py-2 px-4 rounded mt-4">
-                    بستن مدال
+                <button wire:click="closeCreateUserModal" class="bg-gray-300 hover:bg-gray-400 text-gray-800 py-2 px-4 rounded mt-4">
+                    بستن
                 </button>
             </div>
         </div>
-        <div x-data="{ showModal1: @entangle('showModal1') }" x-show="showModal1" @click.away="showModal1 = false"
+        <div x-data="{ showEditUserModal: @entangle('showEditUserModal') }" x-show="showEditUserModal" @click.away="showEditUserModal = false"
              class="fixed inset-0 flex items-center justify-center overflow-y-auto">
             <div class="bg-white p-4 max-w-md mx-auto mt-8 mb-8 rounded shadow-lg">
 
@@ -157,53 +153,30 @@
                         <div class="container max-w-sm mx-auto flex-1 flex flex-col items-center justify-center px-2">
 
                             <div class="bg-white px-6 py-8 rounded shadow-md text-black w-full">
-                                <h1 class="mb-8 text-3xl text-center">ثبت کاربر جدید</h1>
-                                <form wire:submit="createNewUser" action="">
-                                    <input
-                                        wire:model="name"
-                                        type="text"
-                                        class="block border border-grey-light w-full p-3 rounded mb-4"
-                                        name="username"
-                                        placeholder="User Name" />
-                                    @error('name')
-                                    <span class="text-red-500 text-xs">{{$message}}</span>
-                                    @enderror
-                                    <input
-                                        wire:model="email"
-                                        type="text"
-                                        class="block border border-grey-light w-full p-3 rounded mb-4"
-                                        name="email"
-                                        placeholder="Email" />
-                                    @error('email')
-                                    <span class="text-red-500 text-xs">{{$message}}</span>
-                                    @enderror
-                                    <input
-                                        wire:model="password"
-                                        type="password"
-                                        class="block border border-grey-light w-full p-3 rounded mb-4"
-                                        name="password"
-                                        placeholder="Password" />
-                                    @error('password')
-                                    <span class="text-red-500 text-xs">{{$message}}</span>
-                                    @enderror
+                                <h1 class="mb-8 text-3xl text-center"> ویرایش کاربر </h1>
 
-                                    <select wire:model="role_id" class="block border border-grey-light w-full p-3 rounded mb-4">
-                                        <option value="">انتخاب نقش</option>
-                                        @foreach($roles as $role)
-                                            <option value="{{ $role['id'] }}">{{ $role['name'] }}</option>
-                                        @endforeach
-                                    </select>
-                                    @error('role_id')
+                                    <input
+                                        wire:model="EditingName"
+                                        type="text"
+                                        class="block border border-grey-light w-full p-3 rounded mb-4"
+                                        name="EditingName"
+                                        placeholder="EditingName" />
+                                    @error('EditingName')
                                     <span class="text-red-500 text-xs">{{$message}}</span>
                                     @enderror
 
                                     <button
-                                        wire:click.prevent="createNewUser"
-                                        type="submit"
-                                        class="w-full text-center py-3 rounded bg-green-500 text-white hover:bg-green-500 focus:outline-none my-1"
-                                    >ایجاد یک کاربر</button>
+                                        wire:click="update"
 
-                                </form>
+                                        class="w-full text-center py-3 rounded bg-green-500 text-white hover:bg-green-500 focus:outline-none my-1"
+                                    >  ویرایش کاربر</button>
+                                    <button
+                                        wire:click="cancelEdit"
+
+                                        class="w-full text-center py-3 rounded bg-red-500 text-white hover:bg-red-500 focus:outline-none my-1"
+                                    >  انصراف</button>
+
+
                                 @if(session('success'))
                                     <span>{{session('success')}}</span>
                                 @endif
@@ -217,9 +190,7 @@
 
                 </div>
 
-                <button wire:click="closeModal1" class="bg-gray-300 hover:bg-gray-400 text-gray-800 py-2 px-4 rounded mt-4">
-                    بستن مدال
-                </button>
+
             </div>
         </div>
 
