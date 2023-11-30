@@ -21,26 +21,40 @@
                             <th scope="col" class="px-6 py-4">نام کاربر</th>
                             <th scope="col" class="px-6 py-4">ایمیل</th>
                             <th scope="col" class="px-6 py-4">نقش کاربر</th>
-                            <th scope="col" class="px-6 py-4">عملیات </th>
+                            <th scope="col" class="px-6 py-4">عملیات</th>
                         </tr>
                         </thead>
                         <tbody>
                         <!-- فیلتر بر اساس همه‌ی فیلدهای جدول -->
                         @foreach($users as $user)
-                        <tr  class="border-b">
-                            <td class="whitespace-nowrap px-6 py-4 font-medium">{{ $user->id }}</td>
-                            <td class="whitespace-nowrap px-6 py-4">{{ $user->name }}</td>
-                            <td class="whitespace-nowrap px-6 py-4">{{ $user->email }}</td>
-                            <td class="whitespace-nowrap px-6 py-4">{{ $user->role->name }}</td>
-                            <td class="whitespace-nowrap px-6 py-4">
-                                <button wire:click="delete({{$user->id}})">
-                                    delete
-                                </button>
-                                <button wire:click="edit({{$user->id}}) ">
-                                    edit
-                                </button>
-                            </td>
-                        </tr>
+                            <tr class="border-b">
+                                <td class="whitespace-nowrap px-6 py-4 font-medium">{{ $user->id }}</td>
+                                <td class="whitespace-nowrap px-6 py-4">{{ $user->name }}</td>
+                                <td class="whitespace-nowrap px-6 py-4">{{ $user->email }}</td>
+                                <td class="whitespace-nowrap px-6 py-4">{{ $user->role->name }}</td>
+                                <td class="whitespace-nowrap px-6 py-4">
+                                    <button onClick="confirm('Are you sure?')" wire:click="delete({{$user->id}})">
+                                        <svg fill="#000000" xmlns="http://www.w3.org/2000/svg"
+                                             width="20px" height="20px" viewBox="0 0 52 52"
+                                             enable-background="new 0 0 52 52" xml:space="preserve">
+                                    <g>
+                                     <path d="M45.5,10H33V6c0-2.2-1.8-4-4-4h-6c-2.2,0-4,1.8-4,4v4H6.5C5.7,10,5,10.7,5,11.5v3C5,15.3,5.7,16,6.5,16h39
+		                                c0.8,0,1.5-0.7,1.5-1.5v-3C47,10.7,46.3,10,45.5,10z M23,7c0-0.6,0.4-1,1-1h4c0.6,0,1,0.4,1,1v3h-6V7z"/>
+                                        <path d="M41.5,20h-31C9.7,20,9,20.7,9,21.5V45c0,2.8,2.2,5,5,5h24c2.8,0,5-2.2,5-5V21.5C43,20.7,42.3,20,41.5,20z
+	                                  	 M23,42c0,0.6-0.4,1-1,1h-2c-0.6,0-1-0.4-1-1V28c0-0.6,0.4-1,1-1h2c0.6,0,1,0.4,1,1V42z M33,42c0,0.6-0.4,1-1,1h-2
+	                                    	c-0.6,0-1-0.4-1-1V28c0-0.6,0.4-1,1-1h2c0.6,0,1,0.4,1,1V42z"/>
+                                    </g>
+                                        </svg>
+                                    </button>
+                                    <button wire:click="edit({{$user->id}}) ">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                             stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
+                                            <path stroke-linecap="round" stroke-linejoin="round"
+                                                  d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10"/>
+                                        </svg>
+                                    </button>
+                                </td>
+                            </tr>
                         @endforeach
                         </tbody>
                     </table>
@@ -56,13 +70,14 @@
         wire:click="openCreateUserModal"
 
         class="w-full text-center py-3 rounded bg-green-500 text-white hover:bg-green-500 focus:outline-none my-1"
-    >ایجاد  کاربر</button>
-
+    >ایجاد کاربر
+    </button>
 
 
     <div>
 
-        <div x-data="{ showCreateUserModal: @entangle('showCreateUserModal') }" x-show="showCreateUserModal" @click.away="showCreateUserModal = false"
+        <div x-data="{ showCreateUserModal: @entangle('showCreateUserModal') }" x-show="showCreateUserModal"
+             @click.away="showCreateUserModal = false"
              class="fixed inset-0 flex items-center justify-center overflow-y-auto">
             <div class="bg-white p-4 max-w-md mx-auto mt-8 mb-8 rounded shadow-lg">
 
@@ -82,7 +97,7 @@
                                         type="text"
                                         class="block border border-grey-light w-full p-3 rounded mb-4"
                                         name="username"
-                                        placeholder="User Name" />
+                                        placeholder="User Name"/>
                                     @error('name')
                                     <span class="text-red-500 text-xs">{{$message}}</span>
                                     @enderror
@@ -91,7 +106,7 @@
                                         type="text"
                                         class="block border border-grey-light w-full p-3 rounded mb-4"
                                         name="email"
-                                        placeholder="Email" />
+                                        placeholder="Email"/>
                                     @error('email')
                                     <span class="text-red-500 text-xs">{{$message}}</span>
                                     @enderror
@@ -100,12 +115,13 @@
                                         type="password"
                                         class="block border border-grey-light w-full p-3 rounded mb-4"
                                         name="password"
-                                        placeholder="Password" />
+                                        placeholder="Password"/>
                                     @error('password')
                                     <span class="text-red-500 text-xs">{{$message}}</span>
                                     @enderror
 
-                                    <select wire:model="role_id" class="block border border-grey-light w-full p-3 rounded mb-4">
+                                    <select wire:model="role_id"
+                                            class="block border border-grey-light w-full p-3 rounded mb-4">
                                         <option value="">انتخاب نقش</option>
                                         @foreach($roles as $role)
                                             <option value="{{ $role['id'] }}">{{ $role['name'] }}</option>
@@ -119,7 +135,8 @@
                                         wire:click.prevent="createNewUser"
                                         type="submit"
                                         class="w-full text-center py-3 rounded bg-green-500 text-white hover:bg-green-500 focus:outline-none my-1"
-                                    >ایجاد یک کاربر</button>
+                                    >ایجاد یک کاربر
+                                    </button>
 
                                 </form>
                                 @if(session('success'))
@@ -135,12 +152,14 @@
 
                 </div>
 
-                <button wire:click="closeCreateUserModal" class="bg-gray-300 hover:bg-gray-400 text-gray-800 py-2 px-4 rounded mt-4">
+                <button wire:click="closeCreateUserModal"
+                        class="bg-gray-300 hover:bg-gray-400 text-gray-800 py-2 px-4 rounded mt-4">
                     بستن
                 </button>
             </div>
         </div>
-        <div x-data="{ showEditUserModal: @entangle('showEditUserModal') }" x-show="showEditUserModal" @click.away="showEditUserModal = false"
+        <div x-data="{ showEditUserModal: @entangle('showEditUserModal') }" x-show="showEditUserModal"
+             @click.away="showEditUserModal = false"
              class="fixed inset-0 flex items-center justify-center overflow-y-auto">
             <div class="bg-white p-4 max-w-md mx-auto mt-8 mb-8 rounded shadow-lg">
 
@@ -155,26 +174,28 @@
                             <div class="bg-white px-6 py-8 rounded shadow-md text-black w-full">
                                 <h1 class="mb-8 text-3xl text-center"> ویرایش کاربر </h1>
 
-                                    <input
-                                        wire:model="EditingName"
-                                        type="text"
-                                        class="block border border-grey-light w-full p-3 rounded mb-4"
-                                        name="EditingName"
-                                        placeholder="EditingName" />
-                                    @error('EditingName')
-                                    <span class="text-red-500 text-xs">{{$message}}</span>
-                                    @enderror
+                                <input
+                                    wire:model="EditingName"
+                                    type="text"
+                                    class="block border border-grey-light w-full p-3 rounded mb-4"
+                                    name="EditingName"
+                                    placeholder="EditingName"/>
+                                @error('EditingName')
+                                <span class="text-red-500 text-xs">{{$message}}</span>
+                                @enderror
 
-                                    <button
-                                        wire:click="update"
+                                <button
+                                    wire:click="update"
 
-                                        class="w-full text-center py-3 rounded bg-green-500 text-white hover:bg-green-500 focus:outline-none my-1"
-                                    >  ویرایش کاربر</button>
-                                    <button
-                                        wire:click="cancelEdit"
+                                    class="w-full text-center py-3 rounded bg-green-500 text-white hover:bg-green-500 focus:outline-none my-1"
+                                > ویرایش کاربر
+                                </button>
+                                <button
+                                    wire:click="cancelEdit"
 
-                                        class="w-full text-center py-3 rounded bg-red-500 text-white hover:bg-red-500 focus:outline-none my-1"
-                                    >  انصراف</button>
+                                    class="w-full text-center py-3 rounded bg-red-500 text-white hover:bg-red-500 focus:outline-none my-1"
+                                > انصراف
+                                </button>
 
 
                                 @if(session('success'))
