@@ -66,32 +66,12 @@
     </div>
 
     <!-- component -->
-    <button
-        wire:click="openCreateUserModal"
-
-        class="w-full text-center py-3 rounded bg-green-500 text-white hover:bg-green-500 focus:outline-none my-1"
-    >ایجاد کاربر
-    </button>
-
-
-    <div>
-
-        <div x-data="{ showCreateUserModal: @entangle('showCreateUserModal') }" x-show="showCreateUserModal"
-             @click.away="showCreateUserModal = false"
-             class="fixed inset-0 flex items-center justify-center overflow-y-auto">
-            <div class="bg-white p-4 max-w-md mx-auto mt-8 mb-8 rounded shadow-lg">
-
-
-                <!-- افزودن اسکرول به داخل مدال -->
-                <div class="max-h-85 overflow-y-auto">
-                    <!-- محتوای مدال -->
-
-                    <div class="bg-grey-lighter max-h-screen flex flex-col">
+    <div class="bg-grey-lighter max-h-screen flex flex-col">
                         <div class="container max-w-sm mx-auto flex-1 flex flex-col items-center justify-center px-2">
 
                             <div class="bg-white px-6 py-8 rounded shadow-md text-black w-full">
                                 <h1 class="mb-8 text-3xl text-center">افزودن کاربر جدید</h1>
-                                <form wire:submit="createNewUser" action="">
+                                <form wire:submit="createNewUser" >
                                     <input
                                         wire:model="name"
                                         type="text"
@@ -150,72 +130,80 @@
 
                     </div>
 
-                </div>
-
-                <button wire:click="closeCreateUserModal"
-                        class="bg-gray-300 hover:bg-gray-400 text-gray-800 py-2 px-4 rounded mt-4">
-                    بستن
-                </button>
-            </div>
-        </div>
-        <div x-data="{ showEditUserModal: @entangle('showEditUserModal') }" x-show="showEditUserModal"
-             @click.away="showEditUserModal = false"
-             class="fixed inset-0 flex items-center justify-center overflow-y-auto">
-            <div class="bg-white p-4 max-w-md mx-auto mt-8 mb-8 rounded shadow-lg">
+        <!-- component -->
 
 
-                <!-- افزودن اسکرول به داخل مدال -->
-                <div class="max-h-85 overflow-y-auto">
-                    <!-- محتوای مدال -->
+    <button x-data x-on:click="$dispatch('open-modal',{name:'create'})" class="px-3 py-1 bg-teal-500 text-white rounded">
+        ایجاد کاربر
+    </button>
+    <x-my-modal name="create" title="ایجاد کاربر">
+        <x-slot:body>
 
-                    <div class="bg-grey-lighter max-h-screen flex flex-col">
-                        <div class="container max-w-sm mx-auto flex-1 flex flex-col items-center justify-center px-2">
+            <div class="bg-grey-lighter max-h-screen flex flex-col">
+                <div class="container max-w-sm mx-auto flex-1 flex flex-col items-center justify-center px-2">
 
-                            <div class="bg-white px-6 py-8 rounded shadow-md text-black w-full">
-                                <h1 class="mb-8 text-3xl text-center"> ویرایش کاربر </h1>
+                    <div class="bg-white px-6 py-8 rounded shadow-md text-black w-full">
+                        <form wire:submit="createNewUser" action="">
+                            <input
+                                wire:model="name"
+                                type="text"
+                                class="block border border-grey-light w-full p-3 rounded mb-4"
+                                name="username"
+                                placeholder="User Name"/>
+                            @error('name')
+                            <span class="text-red-500 text-xs">{{$message}}</span>
+                            @enderror
+                            <input
+                                wire:model="email"
+                                type="text"
+                                class="block border border-grey-light w-full p-3 rounded mb-4"
+                                name="email"
+                                placeholder="Email"/>
+                            @error('email')
+                            <span class="text-red-500 text-xs">{{$message}}</span>
+                            @enderror
+                            <input
+                                wire:model="password"
+                                type="password"
+                                class="block border border-grey-light w-full p-3 rounded mb-4"
+                                name="password"
+                                placeholder="Password"/>
+                            @error('password')
+                            <span class="text-red-500 text-xs">{{$message}}</span>
+                            @enderror
 
-                                <input
-                                    wire:model="EditingName"
-                                    type="text"
-                                    class="block border border-grey-light w-full p-3 rounded mb-4"
-                                    name="EditingName"
-                                    placeholder="EditingName"/>
-                                @error('EditingName')
-                                <span class="text-red-500 text-xs">{{$message}}</span>
-                                @enderror
+                            <select wire:model="role_id"
+                                    class="block border border-grey-light w-full p-3 rounded mb-4">
+                                <option value="">انتخاب نقش</option>
+                                @foreach($roles as $role)
+                                    <option value="{{ $role['id'] }}">{{ $role['name'] }}</option>
+                                @endforeach
+                            </select>
+                            @error('role_id')
+                            <span class="text-red-500 text-xs">{{$message}}</span>
+                            @enderror
 
-                                <button
-                                    wire:click="update"
+                            <button
+                                wire:click.prevent="createNewUser"
+                                type="submit"
+                                class="w-full text-center py-3 rounded bg-green-500 text-white hover:bg-green-500 focus:outline-none my-1"
+                            >ایجاد یک کاربر
+                            </button>
 
-                                    class="w-full text-center py-3 rounded bg-green-500 text-white hover:bg-green-500 focus:outline-none my-1"
-                                > ویرایش کاربر
-                                </button>
-                                <button
-                                    wire:click="cancelEdit"
-
-                                    class="w-full text-center py-3 rounded bg-red-500 text-white hover:bg-red-500 focus:outline-none my-1"
-                                > انصراف
-                                </button>
-
-
-                                @if(session('success'))
-                                    <span>{{session('success')}}</span>
-                                @endif
-
-                            </div>
-
-
-                        </div>
+                        </form>
+                        @if(session('success'))
+                            <span>{{session('success')}}</span>
+                        @endif
 
                     </div>
 
+
                 </div>
 
-
             </div>
-        </div>
+        </x-slot:body>
+    </x-my-modal>
 
-    </div>
 
 
 </div>
