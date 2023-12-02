@@ -22,14 +22,21 @@ class Users extends Component
     public $search = '';
     public $roles='';
     public $EditingID='';
-    #[Rule('required|min:2|max:50')]
-    public $EditingName='';
+   // #[Rule('required|min:2|max:50')]
+    //public $EditingName='';
 
     public function mount(){
         $this->roles=\App\Models\Roles::all();
 
     }
     public  function createNewUser(){
+        
+       // $this->validate();
+        // dd($validated);
+       /*  $this->validateOnly('email');
+        $this->validateOnly('name');
+        $this->validateOnly('role_id');
+        $this->validateOnly('password'); */
         $validated=$this->validate();
         User::create(
 
@@ -40,6 +47,7 @@ class Users extends Component
                 'role_id'=>$validated['role_id']
             ]
         );
+            
         $this->reset(['name','email','password','role_id']);
         request()->session()->flash('success','user created success');
     }
