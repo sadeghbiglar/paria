@@ -34,6 +34,11 @@ class Users extends Component
     public function render()
     {
         return view('livewire.users',[
-            'users'=>User::latest()->where('name','like',"%{$this->search}%")->paginate(3)]);
+            'users'=>User::latest()
+                ->where('name','like',"%{$this->search}%")
+                ->orWhere('email', 'like', "%{$this->search}%")
+                ->orWhere('id', 'like', "%{$this->search}%")
+                ->paginate(3)]);
+
     }
 }
