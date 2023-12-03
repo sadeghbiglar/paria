@@ -1,5 +1,5 @@
 <div>
-    <div class="flex flex-col vazirmatn">
+    <div class="flex flex-col vazirmatn" dir="rtl">
         <!-- جستجو -->
         <input
             wire:model.live.debounce.500ms="search"
@@ -61,12 +61,13 @@
                         @endforeach
                         </tbody>
                     </table>
-                    {{$users->links()}}
+
                 </div>
             </div>
         </div>
 
     </div>
+    {{$users->links()}}
     <x-my-modal name="edit-user" title="ویرایش کاربر">
                         <x-slot:body>
                             @if($selectedUser)
@@ -78,6 +79,7 @@
     <!-- component -->
 
         <!-- component -->
+    @can('isAdmin')
     <div dir="rtl" class="pr-4 pt-4">
         <button x-data x-on:click="$dispatch('open-modal',{name:'new-user'})"
                 class="px-3 py-1 bg-teal-500 text-white rounded flex" dir="rtl">
@@ -89,6 +91,7 @@
             کاربر جدید
         </button>
     </div>
+    @endcan
     <x-my-modal name="new-user" title="کاربر جدید">
         <x-slot:body>
             <livewire:create-user/>
