@@ -34,6 +34,10 @@ class User extends Authenticatable
     {
         return $this->belongsTo(Roles::class, 'role_id');
     }
+    public function userword()
+    {
+        return $this->hasMany(Userword::class);
+    }
     /**
      * The attributes that should be hidden for serialization.
      *
