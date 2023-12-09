@@ -24,10 +24,9 @@ class CreateUser extends Component
     public $roles='';
     #[Rule('required|same:password')]
     public $password_confirmation = '';
-    public $lesson1_words='';
+
     public function mount(){
         $this->roles=\App\Models\Roles::all();
-        $this->lesson1_words=\App\Models\Word::all();
     }
     public  function createUser(){
 
@@ -40,13 +39,7 @@ class CreateUser extends Component
                 'password'=>Hash::make( $validated['password']),
                 'role_id'=>$validated['role_id']
             ]);
-        $lesson1_words = Word::take(3)->get();
-       foreach ($lesson1_words as $word) {
-           Userword::create([
-               'user_id' => $user->id,
-               'word_id' => $word->id,
-           ]);
-       }
+
 
 
         $this->reset(['name','email','password','role_id']);

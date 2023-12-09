@@ -15,7 +15,13 @@ return new class extends Migration
             $table->id();
             $table->string('word')->unique();
             $table->string('fa')->unique();
-            $table->string('lesson');
+            $table->string('syn');
+            $table->string('con');
+            $table->string('type');
+            $table->string('example1');
+            $table->string('example1fa');
+            $table->string('example2');
+            $table->string('example2fa');
             $table->timestamps();
         });
     }

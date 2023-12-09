@@ -28,4 +28,7 @@ Route::middleware([
     Route::get('/dashboard1', function () {
         return view('dashboard1');
     })->name('dashboard1');
+    Route::get('/userwords', function () {
+        return view('userwords');
+    })->name('userwords');
 });
