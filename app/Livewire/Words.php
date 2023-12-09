@@ -9,6 +9,7 @@ use Livewire\Component;
 class Words extends Component
 {
     public  $words;
+    public  $Step=1;
     public $userWords = [];
 
     public $meaningVisible = false;
@@ -31,8 +32,12 @@ class Words extends Component
         $removedWord = array_splice($this->words, array_search($wordId, array_column($this->words, 'id')), 1)[0];
         $this->userWords[] = $removedWord;
         $countOriginalWords = count($this->words);
-        if ($countOriginalWords === 0) {
+        if ($countOriginalWords === 0 && $this->Step==3) {
             $this->saveUserWords();
+        }elseif ($countOriginalWords === 0){
+           $this->Step++;
+           $this->mount();
+           $this->userWords=[];
         }
 
     }
@@ -51,8 +56,10 @@ class Words extends Component
     }
     public function mount()
     {
-       $this->words = Word::take(4)->get()->toArray();
-
+      // $this->words = Word::take(4)->get()->toArray();
+        $this->words = Word::whereNotIn('id', function ($query) {
+            $query->select('word_id')->from('userwords')->where('user_id', auth()->id());
+        })->take(2)->get()->toArray();
     }
 
 
