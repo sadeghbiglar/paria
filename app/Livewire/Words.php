@@ -8,6 +8,8 @@ use Livewire\Component;
 
 class Words extends Component
 {
+    protected $listeners = ['remove'];
+
     public  $words;
     public  $Step=1;
     public $userWords = [];
@@ -23,7 +25,16 @@ class Words extends Component
     }
     public function replaceWord($wordId)
     {
-        shuffle($this->words);
+        if($this->Step==3){
+            array_splice($this->words, array_search($wordId, array_column($this->words, 'id')), 1)[0];
+            $countOriginalWords = count($this->words);
+            if ($countOriginalWords === 0 ) {
+                $this->saveUserWords();}
+        }
+        else{
+            shuffle($this->words);
+
+        }
        // $this->emit('wordsUpdated', $this->words);
     }
     public function removeWord($wordId)
@@ -51,9 +62,11 @@ class Words extends Component
             ]);
         }
 
-        // پاک کردن آرایه userWords
+
         $this->userWords = [];
+       // $this->dispatchBrowserEvent('show-success-animation');
     }
+
     public function mount()
     {
       // $this->words = Word::take(4)->get()->toArray();
