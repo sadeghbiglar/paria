@@ -11,6 +11,7 @@ class Words extends Component
     protected $listeners = ['remove'];
 
     public  $words;
+    public  $words_bakup;
     public  $Step=1;
     public $userWords = [];
 
@@ -47,8 +48,8 @@ class Words extends Component
             $this->saveUserWords();
         }elseif ($countOriginalWords === 0){
            $this->Step++;
-           $this->mount();
-           $this->userWords=[];
+            $this->words=$this->words_bakup;
+            $this->userWords=[];
         }
 
     }
@@ -72,7 +73,8 @@ class Words extends Component
       // $this->words = Word::take(4)->get()->toArray();
         $this->words = Word::whereNotIn('id', function ($query) {
             $query->select('word_id')->from('userwords')->where('user_id', auth()->id());
-        })->take(2)->get()->toArray();
+        })->inRandomOrder()->take(2)->get()->toArray();
+        $this->words_bakup=$this->words;
     }
 
 
