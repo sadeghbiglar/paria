@@ -11,7 +11,7 @@ class Words extends Component
     protected $listeners = ['remove'];
 
     public  $words;
-    public  $words_bakup;
+    public  $words_bakup=[];
     public  $Step=1;
     public $userWords = [];
 
@@ -65,6 +65,7 @@ class Words extends Component
 
 
         $this->userWords = [];
+        $this->words_bakup=[];
        // $this->dispatchBrowserEvent('show-success-animation');
     }
 
